@@ -1,0 +1,8 @@
+Requirements
+
+- Go
+- Windows XP / Vista / 7 / 8 (Only tested on 7)
+
+Compilation
+
+go tool cgo losegui/losegui.go
