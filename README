@@ -2,7 +2,9 @@ Requirements
 
 - Go
 - Windows XP / Vista / 7 / 8 (Only tested on 7)
+- GCC (I used MinGW gcc 4.8.2)
 
 Compilation
 
-go tool cgo losegui/losegui.go
+cd losegui
+go tool cgo losegui.go
