@@ -51,7 +51,7 @@ func FGetCh(hIn _Ctype_HANDLE) (byte) {
 }
 
 func GetText(hIn C.HANDLE, hOut C.HANDLE, pos COORD, maxlength int) (string) {
-    text := C.getText(hIn, hOut, C.COORD{C.SHORT(pos.X),C.SHORT(pos.Y)}, C.int(maxlength))
+    text := C.getText(hIn, hOut, C.COORD{_Ctype_SHORT(pos.X),_Ctype_SHORT(pos.Y)}, C.int(maxlength))
     defer C.free(unsafe.Pointer(text))
 
     return C.GoString(text)
@@ -62,8 +62,8 @@ func Cls(hOut C.HANDLE) {
 }
 
 func Clear(hOut C.HANDLE, from, to COORD) {
-    C.clear(hOut, C.COORD{C.SHORT(from.X),C.SHORT(from.Y)},
-            C.COORD{C.SHORT(to.X),C.SHORT(to.Y)})
+    C.clear(hOut, C.COORD{_Ctype_SHORT(from.X),_Ctype_SHORT(from.Y)},
+            C.COORD{_Ctype_SHORT(to.X),_Ctype_SHORT(to.Y)})
 }
 
 //TODO Make the C function use a COORD instead of X and Y
@@ -81,12 +81,12 @@ func DrawText(hOut C.HANDLE, text string, align, xOff, yPos int) (COORD) {
 
 func DrawLine(hOut C.HANDLE, chr byte, vertical int8, from COORD, count uint) {
     C.drawLine(hOut, C.char(chr), C.BOOL(vertical),
-               C.COORD{C.SHORT(from.X),C.SHORT(from.Y)}, C.uint(count))
+               C.COORD{_Ctype_SHORT(from.X),_Ctype_SHORT(from.Y)}, C.uint(count))
 }
 
 func DrawBox(hOut C.HANDLE, topLeft, bottomRight COORD) {
-    C.drawBox(hOut, C.COORD{C.SHORT(topLeft.X),C.SHORT(topLeft.Y)},
-              C.COORD{C.SHORT(bottomRight.X),C.SHORT(bottomRight.Y)})
+    C.drawBox(hOut, C.COORD{_Ctype_SHORT(topLeft.X),_Ctype_SHORT(topLeft.Y)},
+              C.COORD{_Ctype_SHORT(bottomRight.X),_Ctype_SHORT(bottomRight.Y)})
 }
 
 //Wrappers for windows.h functions begin here
@@ -104,11 +104,11 @@ func SetConsoleTitle(text string) {
 func SetConsoleScreenBufferSize(hOut C.HANDLE, bSize COORD) (bool) {
     return int8(
         C.SetConsoleScreenBufferSize(
-            hOut, C.COORD{C.SHORT(bSize.X),C.SHORT(bSize.Y)})) == 1
+            hOut, C.COORD{_Ctype_SHORT(bSize.X),_Ctype_SHORT(bSize.Y)})) == 1
 }
 
 func SetConsoleWindowInfo(hOut C.HANDLE, absolute int8, wSize *SMALL_RECT) {
-    C.SetConsoleWindowInfo(hOut, C.BOOL(absolute), &C.SMALL_RECT{
-                           C.SHORT(wSize.X1),C.SHORT(wSize.Y1),
-                           C.SHORT(wSize.X2),C.SHORT(wSize.Y2)})
+    C.SetConsoleWindowInfo(hOut, C.WINBOOL(absolute), &C.SMALL_RECT{
+                           _Ctype_SHORT(wSize.X1),_Ctype_SHORT(wSize.Y1),
+                           _Ctype_SHORT(wSize.X2),_Ctype_SHORT(wSize.Y2)})
 }
